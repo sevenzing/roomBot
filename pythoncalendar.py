@@ -129,7 +129,7 @@ def getNextCleaningDay(prev_date):
     my_calendar = thisMonth + nextMonth
     for i in range(len(my_calendar)):
         if prev_day in my_calendar[i]:
-            targetDay = my_calendar[i + 1][(datetime.datetime.weekday(prev_date) + 2) % 6]
+            targetDay = my_calendar[i + 2][(datetime.datetime.weekday(prev_date) + 2) % 6]
             targetYear = prev_year
             targetMonth = prev_month
             if targetDay < my_calendar[i][0]:
@@ -160,7 +160,7 @@ def checkTime(db, bot):
         nextCleaningDay = getNextCleaningDay(prev_date)
         if currentYear >= nextCleaningDay.year and \
                 currentMonth >= nextCleaningDay.month and \
-                currentDay >= nextCleaningDay.day and now.hour >= 8:
+                currentDay >= nextCleaningDay.day and now.hour >= 7 - 3:
 
             print('asd')
 
