@@ -1,51 +1,120 @@
+import pymongo
 import telebot
 from telebot.types import Message
 import os
-from flask import Flask, request
-import logging
+from pymongo import MongoClient
+import src
+from pythoncalendar import create_calendar, process_calendar_selection, checkTime
+from MESSAGES import *
+from mongotools import *
+from threading import Thread
+import time
 
-token = '982620066:AAESmASPIDYIM7bGOyCCl6r8cmO7r5qTuSo'
-bot = telebot.TeleBot(token)
 
-
-# Здесь пишем наши хэндлеры
-
-# Проверим, есть ли переменная окружения Хероку (как ее добавить смотрите ниже)
-
-@bot.message_handler(content_types=['text'])
-def jopa(message: Message):
-    bot.send_message(message.chat.id, message.text)
-
+class CheckTime(Thread):
+    def run(self):
+        while 1:
+            print("check time start!")
+            checkTime(db, bot)
+            time.sleep(60)
 
 if "HEROKU" in list(os.environ.keys()):
-    logger = telebot.logger
-    telebot.logger.setLevel(logging.INFO)
+    """
+    If bot is started by heroku
+    """
 
-    server = Flask(__name__)
-
-
-    @server.route("/bot", methods=['POST'])
-    def getMessage():
-        bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-        print('getMessage')
-        return "!", 200
-
-
-    @server.route("/")
-    def webhook():
-        bot.remove_webhook()
-        bot.set_webhook(
-            url="https://tgbot1234.herokuapp.com/")  # этот url нужно заменить на url вашего Хероку приложения
-        print('webhook')
-        return "?", 200
-
-
-    print(f"Bot has started by webhook.")
-    server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
-    print('String after run')
+    TOKEN = os.getenv('BOT_TOKEN')
+    MONGO_URI = os.getenv('MONGODB_URI')
 else:
-    # если переменной окружения HEROKU нету, значит это запуск с машины разработчика.
-    # Удаляем вебхук на всякий случай, и запускаем с обычным поллингом.
-    bot.remove_webhook()
-    print(f"Bot has started by polling.")
-    bot.polling(none_stop=True)
+    """
+    If bot started by my computer
+    """
+
+    from TOKENS import TOKEN, MONGO_URI
+
+bot = telebot.TeleBot(TOKEN)
+
+
+@bot.message_handler(commands=['schedule'])
+def sendSchedule(message: Message):
+    chat_id = message.chat.id
+    if not room_in_database(db, chat_id):
+        startMessage(message)
+        return
+
+    url = "https://hotel.university.innopolis.ru/assets/images/schedule.png"
+    name = src.saveScheduleImage(url)
+    bot.send_photo(chat_id, src.getScheduleImage(name))
+
+
+@bot.message_handler(commands=['start'])
+def startMessage(message: Message):
+    chat_id = message.chat.id
+    bot.send_message(chat_id, START_MESSAGE)
+
+    if not room_in_database(db, chat_id):
+        createNew(db, chat_id)
+
+@bot.message_handler(commands=['addmember'])
+def addmembers(message: Message):
+    chat_id = message.chat.id
+    if not room_in_database(db, chat_id):
+        startMessage(message)
+        return
+
+    aliases = message.text.split()
+    if len(aliases) < 2:
+        bot.send_message(chat_id, ADDMEMBER_ERORR)
+        return
+
+    chat = get_chat(db, chat_id)
+    noticelist = eval(chat['noticelist'])
+    noticelist.extend(aliases[1:])
+    noticelist = list(set(noticelist))
+    update(db, chat_id, noticelist=str(noticelist))
+    bot.send_message(chat_id, SUCCESS_ADDMEMBER % ' '.join(noticelist))
+
+
+@bot.message_handler(commands=['setschedule'])
+def setSchedule(message: Message):
+    chat_id = message.chat.id
+    if not room_in_database(db, chat_id):
+        startMessage(message)
+        return
+
+    bot.send_message(message.chat.id, CALENDAR_SEND, reply_markup=create_calendar())
+    update(db, chat_id, state='2')
+
+
+@bot.callback_query_handler(func=lambda call: call.data.startswith("IGNORE") or
+                                              call.data.startswith("DAY"))
+def callback_query(call):
+    chat_id = call.message.chat.id
+    if not room_in_database(db, chat_id):
+        startMessage(call.message)
+        return
+
+    chat = get_chat(db, chat_id)
+    if chat['state'] == '2':
+        result = process_calendar_selection(bot, call)
+        update(db, chat_id, chosenday=result.__repr__(), state='1')
+
+    else:
+        bot.answer_callback_query(call.id)
+
+
+@bot.message_handler(content_types=['text'])
+def inPrivateMessage(message: Message):
+    if message.from_user.id == message.chat.id:
+        bot.send_message(message.chat.id, GO_TO_CHAT)
+        return True
+    return False
+
+
+client = MongoClient(MONGO_URI)
+db = client.heroku_2n5xgpck.roomBotBase
+
+timeChecking = CheckTime()
+timeChecking.start()
+
+bot.infinity_polling()
