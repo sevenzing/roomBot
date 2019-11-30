@@ -149,6 +149,7 @@ def checkTime(db, bot):
     currentMonth = now.month
     currentDay = now.day
 
+
     for chat in db.find({"checknotice": True}):
         prev_date = eval(chat['chosenday'])
         if prev_date is None:
@@ -172,7 +173,7 @@ def checkTime(db, bot):
             bot.send_message(chat['chat_id'], noticeMessage)
 
             update(db, chat['chat_id'], chosenday=nextCleaningDay.__repr__())
-
+    print(f"Time has been checked. Current time is {now}")
 
 def getMonthName(date: datetime.datetime):
     return date.strftime("%B")
