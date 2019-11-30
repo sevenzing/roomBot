@@ -7,3 +7,4 @@ class Room:
 
     def calculate(self):
         pass
+

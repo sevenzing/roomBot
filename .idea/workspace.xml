@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="42d55990-a23c-45a6-aba8-938bc4983fbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MESSAGES.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Room.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mongotools.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pythoncalendar.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schedule.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MESSAGES.py" beforeDir="false" afterPath="$PROJECT_DIR$/MESSAGES.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Room.py" beforeDir="false" afterPath="$PROJECT_DIR$/Room.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongotools.py" beforeDir="false" afterPath="$PROJECT_DIR$/mongotools.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythoncalendar.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythoncalendar.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src.py" beforeDir="false" afterPath="$PROJECT_DIR$/src.py" afterDir="false" />
     </list>

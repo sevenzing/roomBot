@@ -6,11 +6,6 @@ default_user = {'chat_id': None,
                 'noticelist': '[]',
                 'checknotice': True}
 
-
-
-
-
-
 def createNew(db, id):
     user = default_user.copy()
 
@@ -52,4 +47,4 @@ if __name__ == '__main__':
 
     print(dir(db))
     for i in db.find({"checknotice": True}):
-        print(i)
+        pass

@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python3
 #
 # A library that allows to create an inline calendar keyboard.
@@ -180,5 +181,4 @@ def checkTime(db, bot):
 
 if __name__ == "__main__":
     date = datetime.datetime(2019, 12, 2)
-
     print(getNextCleaningDay(date))
