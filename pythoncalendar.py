@@ -125,7 +125,7 @@ def getNextCleaningDay(prev_date):
     now = datetime.datetime.now()
     if now < prev_date:
         return prev_date
-    
+
     thisMonth = calendar.monthcalendar(prev_year, prev_month)
     nextMonth = calendar.monthcalendar(prev_year + prev_month//12, prev_month%12 + 1)
 
@@ -139,7 +139,11 @@ def getNextCleaningDay(prev_date):
     my_calendar = thisMonth + nextMonth
     for i in range(len(my_calendar)):
         if prev_day in my_calendar[i]:
-            targetDay = my_calendar[i + 2][(datetime.datetime.weekday(prev_date) + 2) % 6]
+            if datetime.datetime.weekday(prev_date) < 4:
+                targetDay = my_calendar[i + 1][(datetime.datetime.weekday(prev_date) + 2) % 6]
+            else:
+                targetDay = my_calendar[i + 2][(datetime.datetime.weekday(prev_date) + 2) % 6]
+                
             targetYear = prev_year
             targetMonth = prev_month
             if targetDay < my_calendar[i][0]:
