@@ -65,9 +65,15 @@ def create_calendar(currentYear=None, currentMonth=None, currentDay=None):
     #print(my_calendar)
     for i in range(len(my_calendar)):
         if currentDay in my_calendar[i]:
+            flag = True
             for _ in range(2):
                 row = []
                 for day in my_calendar[i]:
+                    if i > 1 and flag:
+                        if day < my_calendar[i - 1][0]:
+                            currentMonth += 1
+                            flag = False
+
                     if (day == 0):
                         row.append(InlineKeyboardButton(" ", callback_data=data_ignore))
                     else:
@@ -116,6 +122,10 @@ def getNextCleaningDay(prev_date):
     prev_month = prev_date.month
     prev_day = prev_date.day
 
+    now = datetime.datetime.now()
+    if now < prev_date:
+        return prev_date
+    
     thisMonth = calendar.monthcalendar(prev_year, prev_month)
     nextMonth = calendar.monthcalendar(prev_year + prev_month//12, prev_month%12 + 1)
 
