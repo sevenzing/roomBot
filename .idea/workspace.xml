@@ -4,12 +4,10 @@
     <list default="true" id="42d55990-a23c-45a6-aba8-938bc4983fbf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MESSAGES.py" beforeDir="false" afterPath="$PROJECT_DIR$/MESSAGES.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Room.py" beforeDir="false" afterPath="$PROJECT_DIR$/Room.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mongotools.py" beforeDir="false" afterPath="$PROJECT_DIR$/mongotools.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythoncalendar.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythoncalendar.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src.py" beforeDir="false" afterPath="$PROJECT_DIR$/src.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

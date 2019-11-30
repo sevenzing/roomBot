@@ -1,7 +1,5 @@
 import requests
-
-
-
+import math
 
 def saveScheduleImage(url, name='schedule.png') -> str:
     file = open(name, 'wb')
@@ -14,6 +12,11 @@ def saveScheduleImage(url, name='schedule.png') -> str:
 def getScheduleImage(path):
     file = open(path, 'rb')
     return file
+
+
+def ordinal(n):
+    return "%d%s" % (n, "tsnrhtdd"[(math.floor(n / 10) % 10 != 1) * (n % 10 < 4) * n % 10::4])
+
 
 
 if __name__ == "__main__":

@@ -45,6 +45,5 @@ if __name__ == '__main__':
 
     db = client.heroku_2n5xgpck.roomBotBase
 
-    print(dir(db))
     for i in db.find({"checknotice": True}):
         pass

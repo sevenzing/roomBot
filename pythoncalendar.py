@@ -52,7 +52,7 @@ def create_calendar(currentYear=None, currentMonth=None, currentDay=None):
     keyboard.add(*row)
 
     thisMonth = calendar.monthcalendar(currentYear, currentMonth)
-    nextMonth = calendar.monthcalendar(*calendar.nextmonth(currentYear, currentMonth))
+    nextMonth = calendar.monthcalendar(currentYear + currentMonth//12, currentMonth%12 + 1)
 
     if thisMonth[-1][-1] == 0:
         a = thisMonth[-1]
@@ -62,7 +62,7 @@ def create_calendar(currentYear=None, currentMonth=None, currentDay=None):
         nextMonth.pop(0)
 
     my_calendar = thisMonth + nextMonth
-
+    #print(my_calendar)
     for i in range(len(my_calendar)):
         if currentDay in my_calendar[i]:
             for _ in range(2):
@@ -117,7 +117,7 @@ def getNextCleaningDay(prev_date):
     prev_day = prev_date.day
 
     thisMonth = calendar.monthcalendar(prev_year, prev_month)
-    nextMonth = calendar.monthcalendar(*calendar.nextmonth(prev_year, prev_month))
+    nextMonth = calendar.monthcalendar(prev_year + prev_month//12, prev_month%12 + 1)
 
     if thisMonth[-1][-1] == 0:
         a = thisMonth[-1]
@@ -148,18 +148,15 @@ def checkTime(db, bot):
     currentYear = now.year
     currentMonth = now.month
     currentDay = now.day
-    print(now)
 
     for chat in db.find({"checknotice": True}):
         prev_date = eval(chat['chosenday'])
-        print(chat)
         if prev_date is None:
             return
 
 
 
         nextCleaningDay = getNextCleaningDay(prev_date)
-        print(nextCleaningDay)
         if currentYear >= nextCleaningDay.year and \
                 currentMonth >= nextCleaningDay.month and \
                 currentDay >= nextCleaningDay.day and now.hour >= 8:
@@ -177,7 +174,8 @@ def checkTime(db, bot):
             update(db, chat['chat_id'], chosenday=nextCleaningDay.__repr__())
 
 
-
+def getMonthName(date: datetime.datetime):
+    return date.strftime("%B")
 
 if __name__ == "__main__":
     date = datetime.datetime(2019, 12, 2)
