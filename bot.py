@@ -233,7 +233,7 @@ def inPrivateMessage(message: Message):
 
 client = MongoClient(MONGO_URI)
 db = client.heroku_2n5xgpck.roomBotBase
-
+print(dir(calendar))
 timeChecking = CheckTime()
 timeChecking.start()
 
