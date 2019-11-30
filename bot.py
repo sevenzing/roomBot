@@ -9,7 +9,7 @@ from MESSAGES import *
 from mongotools import *
 from threading import Thread
 import time
-
+import calendar
 
 class CheckTime(Thread):
     def run(self):
@@ -116,5 +116,5 @@ db = client.heroku_2n5xgpck.roomBotBase
 
 timeChecking = CheckTime()
 timeChecking.start()
-
+print(dir(calendar))
 bot.infinity_polling()
