@@ -1,0 +1,57 @@
+2020-02-24 12:30:20,416 | roomBot.tools | INFO 	| Hello from @fortest1488bot!
+2020-02-24 12:30:20,485 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-02-24 12:30:20,485 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-02-24 12:30:20,485 | roomBot.tools | INFO 	| [INFO] >> Time checking started.
+2020-02-24 12:30:20,485 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-02-24 12:30:42,713 | roomBot.tools | INFO 	| Hello from @fortest1488bot!
+2020-02-24 12:30:42,790 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-02-24 12:30:42,790 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-02-24 12:30:42,791 | roomBot.tools | INFO 	| [INFO] >> Time checking started.
+2020-02-24 12:30:42,792 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-02-24 12:37:00,294 | roomBot.tools | INFO 	| Hello from @fortest1488bot!
+2020-02-24 12:37:00,366 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-02-24 12:37:00,366 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-02-24 12:37:00,366 | roomBot.tools | INFO 	| [INFO] >> Time checking started.
+2020-02-24 12:37:00,366 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-02-24 12:37:00,888 | roomBot.tools | INFO 	| Checked time
+2020-02-24 12:37:09,232 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: You haven't chosen a building yet. 
+/changebuilding
+2020-02-24 12:37:31,168 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Hi! I'm a room bot. I can do some useful things. 
+
+ First, select your building to understand the cleaning schedule
+ If we are in a chat add all your roommates /addmembers
+ When the next cleaning day? /nextcleaning
+ The bot sends a notification on every cleaning day at 8am 
+ Did you make a mistake? Change your building /changebuilding 
+
+2020-02-24 12:37:31,275 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894:  Please, select your building
+
+2020-02-24 12:37:35,530 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: Great! You have chosen 4th building
+2020-02-24 12:37:39,546 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *9 days*, on the *4th of March*.
+
+2020-02-24 12:38:42,350 | roomBot.tools | INFO 	| BOT -> 339999894: Hello! Don't forget about cleaning today!
+2020-02-24 12:38:42,515 | roomBot.tools | INFO 	| Sended notice message to 339999894. Updated lastnotice to 2020-02-25 00:00:00+03:00
+2020-02-24 12:38:42,515 | roomBot.tools | INFO 	| Checked time
+2020-02-24 09:40:50,164 | roomBot.tools | INFO 	| Hello from @fortest1488bot!
+2020-02-24 09:40:50,238 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-02-24 09:40:50,238 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-02-24 09:40:50,239 | roomBot.tools | INFO 	| [INFO] >> Time checking started.
+2020-02-24 09:40:50,239 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-02-24 09:41:19,094 | roomBot.tools | INFO 	| Hello from @fortest1488bot!
+2020-02-24 09:41:19,158 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-02-24 09:41:19,158 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-02-24 09:41:19,159 | roomBot.tools | INFO 	| [INFO] >> Time checking started.
+2020-02-24 09:41:19,159 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-02-24 09:41:21,919 | roomBot.tools | INFO 	| Checked time
+2020-02-24 09:41:32,005 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: You haven't chosen a building yet. 
+/changebuilding
+2020-02-24 09:41:33,512 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894:  Please, select your building
+
+2020-02-24 09:41:34,998 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: Great! You have chosen 4th building
+2020-02-24 09:41:36,081 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894:  Please, select your building
+
+2020-02-24 09:41:37,133 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: Great! You have chosen 4th building
+2020-02-24 09:41:38,402 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *9 days*, on the *4th of March*.
+
+2020-02-24 09:41:44,908 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *9 days*, on the *4th of March*.
+

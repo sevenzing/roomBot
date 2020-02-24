@@ -17,6 +17,7 @@ def check_time(bot, db):
 
     current_building = get_current_building(now)
     for chat in db.find({"checknotice": True}):
+        print(chat)
         lastnotice = get_date_from_string(chat['lastnotice'])
         if now <= lastnotice:
             continue

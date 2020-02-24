@@ -47,14 +47,15 @@ def get_chat(db, chat_id):
     return chat
 
 
-def update(db, chat_id, state=None, chosenbuilding=None, noticelist=None, checknotice=None, lastnotice=None):
+def update(db, chat_id, username=None, chosenbuilding=None, checknotice=None, lastnotice=None):
     if not chat_in_database(db, chat_id):
         createNew(db, chat_id, chosenbuilding=chosenbuilding)
     
     new_user_options = {}
-    for i, option in enumerate([chat_id, state, chosenbuilding, noticelist, checknotice, lastnotice]):
-        if option is not None:
-            new_user_options[list(default_chat.keys())[i]] = option
+    for option_name, option in zip(['username', 'chosenbuilding', 'checknotice', 'lastnotice'],
+                                   [username, chosenbuilding, checknotice, lastnotice]):
+        if not option is None:
+            new_user_options[option_name] = option
 
     db.update_one({'chat_id': chat_id}, {'$set': new_user_options})
 
