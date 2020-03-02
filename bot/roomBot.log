@@ -1,0 +1,238 @@
+2020-03-02 18:18:53,184 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:18:53,252 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:18:53,253 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:18:53,253 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 21:20:51,522 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 21:20:51,592 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 21:20:51,593 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 21:20:51,593 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 21:21:25,402 | roomBot.tools | ERROR 	| mongo:27017: [Errno -2] Name or service not known
+Traceback (most recent call last):
+  File "/home/lev/pythonProjects/roomBot3/bot/roomBot/bot.py", line 29, in start
+    bot.polling()
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 392, in polling
+    self.__threaded_polling(none_stop, interval, timeout)
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 415, in __threaded_polling
+    polling_thread.raise_exceptions()
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/util.py", line 79, in raise_exceptions
+    six.reraise(self.exc_info[0], self.exc_info[1], self.exc_info[2])
+  File "/usr/lib/python3/dist-packages/six.py", line 693, in reraise
+    raise value
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 280, in __retrieve_updates
+    self.process_new_updates(updates)
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 317, in process_new_updates
+    self.process_new_messages(new_messages)
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 339, in process_new_messages
+    self._notify_command_handlers(self.message_handlers, new_messages)
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 1801, in _notify_command_handlers
+    if self._test_message_handler(message_handler, message):
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 1769, in _test_message_handler
+    if not self._test_filter(filter, filter_value, message):
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 1790, in _test_filter
+    return test_cases.get(filter, lambda msg: False)(message)
+  File "/home/lev/.local/lib/python3.6/site-packages/telebot/__init__.py", line 1787, in <lambda>
+    'func': lambda msg: filter_value(msg)
+  File "/home/lev/pythonProjects/roomBot3/bot/roomBot/bot.py", line 87, in <lambda>
+    @bot.message_handler(func=lambda m: mongotools.get_safe(m.chat.id, 'state') == tools.States.STATE_WAIT_FOR_ADD)
+  File "/home/lev/pythonProjects/roomBot3/bot/roomBot/mongotools.py", line 91, in get_safe
+    chat = get_chat(chat_id)
+  File "/home/lev/pythonProjects/roomBot3/bot/roomBot/mongotools.py", line 45, in get_chat
+    for chat_iter in db.find({'chat_id': chat_id}):
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/cursor.py", line 1156, in next
+    if len(self.__data) or self._refresh():
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/cursor.py", line 1050, in _refresh
+    self.__session = self.__collection.database.client._ensure_session()
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/mongo_client.py", line 1810, in _ensure_session
+    return self.__start_session(True, causal_consistency=False)
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/mongo_client.py", line 1763, in __start_session
+    server_session = self._get_server_session()
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/mongo_client.py", line 1796, in _get_server_session
+    return self._topology.get_server_session()
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/topology.py", line 485, in get_server_session
+    None)
+  File "/home/lev/.local/lib/python3.6/site-packages/pymongo/topology.py", line 209, in _select_servers_loop
+    self._error_message(selector))
+pymongo.errors.ServerSelectionTimeoutError: mongo:27017: [Errno -2] Name or service not known
+2020-03-02 18:22:24,187 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:22:24,258 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:22:24,259 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:22:24,259 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 18:22:24,963 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 3rd, so the next cleaning day will be in *7 days*, on the *9th of March*.
+
+2020-03-02 18:26:22,646 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894:  Please, select your building
+
+2020-03-02 18:26:28,346 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: Great! You have chosen 4th building
+2020-03-02 18:26:29,362 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *2 days*, on the *4th of March*.
+
+2020-03-02 18:33:06,174 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 18:37:44,040 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:37:44,107 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:37:44,108 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:37:44,108 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 18:38:10,122 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *2 days*, on the *4th of March*.
+
+2020-03-02 18:41:39,263 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:41:39,332 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:41:39,333 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:41:39,333 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 18:42:01,299 | roomBot.tools | INFO 	| Message not modified: {'content_type': 'text', 'message_id': 105, 'from_user': {'id': 823939344, 'is_bot': True, 'first_name': 'kektest', 'username': 'kektest1488bot', 'last_name': None, 'language_code': None}, 'date': 1583173986, 'chat': {'type': 'private', 'last_name': 'Lymarenko', 'first_name': 'Lev', 'username': 'sevenzing', 'id': 339999894, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}, 'forward_from_chat': None, 'forward_from_message_id': None, 'forward_from': None, 'forward_date': None, 'reply_to_message': None, 'edit_date': 1583173997, 'media_group_id': None, 'author_signature': None, 'text': 'your list:', 'entities': None, 'caption_entities': None, 'audio': None, 'document': None, 'photo': None, 'sticker': None, 'video': None, 'video_note': None, 'voice': None, 'caption': None, 'contact': None, 'location': None, 'venue': None, 'animation': None, 'new_chat_member': None, 'new_chat_members': None, 'left_chat_member': None, 'new_chat_title': None, 'new_chat_photo': None, 'delete_chat_photo': None, 'group_chat_created': None, 'supergroup_chat_created': None, 'channel_chat_created': None, 'migrate_to_chat_id': None, 'migrate_from_chat_id': None, 'pinned_message': None, 'invoice': None, 'successful_payment': None, 'connected_website': None, 'json': {'message_id': 105, 'from': {'id': 823939344, 'is_bot': True, 'first_name': 'kektest', 'username': 'kektest1488bot'}, 'chat': {'id': 339999894, 'first_name': 'Lev', 'last_name': 'Lymarenko', 'username': 'sevenzing', 'type': 'private'}, 'date': 1583173986, 'edit_date': 1583173997, 'text': 'your list:', 'reply_markup': {'inline_keyboard': [[{'text': 'example of your items: [2]', 'callback_data': 'change_menu|increase|example of your items'}, {'text': '[decrease]', 'callback_data': 'change_menu|decrease|example of your items'}], [{'text': '[close]', 'callback_data': 'change_menu|exit|'}, {'text': '[clear]', 'callback_data': 'change_menu|clear|'}]]}}}
+2020-03-02 18:43:19,990 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 18:43:27,272 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 21:49:52,026 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 21:49:52,093 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 21:49:52,094 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 21:49:52,094 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 18:51:08,353 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:51:08,424 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:51:08,425 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:51:08,425 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 18:51:09,099 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *2 days*, on the *4th of March*.
+
+2020-03-02 18:51:27,637 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 18:51:33,230 | roomBot.tools | INFO 	| Message not modified: {'content_type': 'text', 'message_id': 118, 'from_user': {'id': 823939344, 'is_bot': True, 'first_name': 'kektest', 'username': 'kektest1488bot', 'last_name': None, 'language_code': None}, 'date': 1583175087, 'chat': {'type': 'private', 'last_name': 'Lymarenko', 'first_name': 'Lev', 'username': 'sevenzing', 'id': 339999894, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}, 'forward_from_chat': None, 'forward_from_message_id': None, 'forward_from': None, 'forward_date': None, 'reply_to_message': None, 'edit_date': None, 'media_group_id': None, 'author_signature': None, 'text': 'your list:', 'entities': None, 'caption_entities': None, 'audio': None, 'document': None, 'photo': None, 'sticker': None, 'video': None, 'video_note': None, 'voice': None, 'caption': None, 'contact': None, 'location': None, 'venue': None, 'animation': None, 'new_chat_member': None, 'new_chat_members': None, 'left_chat_member': None, 'new_chat_title': None, 'new_chat_photo': None, 'delete_chat_photo': None, 'group_chat_created': None, 'supergroup_chat_created': None, 'channel_chat_created': None, 'migrate_to_chat_id': None, 'migrate_from_chat_id': None, 'pinned_message': None, 'invoice': None, 'successful_payment': None, 'connected_website': None, 'json': {'message_id': 118, 'from': {'id': 823939344, 'is_bot': True, 'first_name': 'kektest', 'username': 'kektest1488bot'}, 'chat': {'id': 339999894, 'first_name': 'Lev', 'last_name': 'Lymarenko', 'username': 'sevenzing', 'type': 'private'}, 'date': 1583175087, 'text': 'your list:', 'reply_markup': {'inline_keyboard': [[{'text': '[close]', 'callback_data': 'change_menu|exit|'}, {'text': '[clear]', 'callback_data': 'change_menu|clear|'}]]}}}
+2020-03-02 18:53:29,038 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:53:29,105 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:53:29,105 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:53:29,106 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 18:53:42,732 | roomBot.tools | INFO 	| Message not modified: {'content_type': 'text', 'message_id': 118, 'from_user': {'id': 823939344, 'is_bot': True, 'first_name': 'kektest', 'username': 'kektest1488bot', 'last_name': None, 'language_code': None}, 'date': 1583175087, 'chat': {'type': 'private', 'last_name': 'Lymarenko', 'first_name': 'Lev', 'username': 'sevenzing', 'id': 339999894, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}, 'forward_from_chat': None, 'forward_from_message_id': None, 'forward_from': None, 'forward_date': None, 'reply_to_message': None, 'edit_date': None, 'media_group_id': None, 'author_signature': None, 'text': 'your list:', 'entities': None, 'caption_entities': None, 'audio': None, 'document': None, 'photo': None, 'sticker': None, 'video': None, 'video_note': None, 'voice': None, 'caption': None, 'contact': None, 'location': None, 'venue': None, 'animation': None, 'new_chat_member': None, 'new_chat_members': None, 'left_chat_member': None, 'new_chat_title': None, 'new_chat_photo': None, 'delete_chat_photo': None, 'group_chat_created': None, 'supergroup_chat_created': None, 'channel_chat_created': None, 'migrate_to_chat_id': None, 'migrate_from_chat_id': None, 'pinned_message': None, 'invoice': None, 'successful_payment': None, 'connected_website': None, 'json': {'message_id': 118, 'from': {'id': 823939344, 'is_bot': True, 'first_name': 'kektest', 'username': 'kektest1488bot'}, 'chat': {'id': 339999894, 'first_name': 'Lev', 'last_name': 'Lymarenko', 'username': 'sevenzing', 'type': 'private'}, 'date': 1583175087, 'text': 'your list:', 'reply_markup': {'inline_keyboard': [[{'text': '[close]', 'callback_data': 'change_menu|exit|'}, {'text': '[clear]', 'callback_data': 'change_menu|clear|'}]]}}}
+2020-03-02 18:54:13,128 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 18:54:13,204 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 18:54:13,205 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 18:54:13,205 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:17:45,197 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 19:17:45,269 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 19:17:45,270 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 19:17:45,270 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:17:46,927 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Your building is 4th, so the next cleaning day will be in *2 days*, on the *4th of March*.
+
+2020-03-02 19:17:53,589 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:17:56,682 | roomBot.tools | ERROR 	| name 'chat_id' is not defined
+Traceback (most recent call last):
+  File "run.py", line 5, in <module>
+    start()
+  File "/bot/roomBot/bot.py", line 28, in start
+    bot.polling()
+  File "/usr/local/lib/python3.8/site-packages/telebot/__init__.py", line 392, in polling
+    self.__threaded_polling(none_stop, interval, timeout)
+  File "/usr/local/lib/python3.8/site-packages/telebot/__init__.py", line 416, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "/usr/local/lib/python3.8/site-packages/telebot/util.py", line 109, in raise_exceptions
+    six.reraise(self.exc_info[0], self.exc_info[1], self.exc_info[2])
+  File "/usr/local/lib/python3.8/site-packages/six.py", line 703, in reraise
+    raise value
+  File "/usr/local/lib/python3.8/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/bot/roomBot/bot.py", line 105, in change_query_handler
+    tools.proccess_change_menu(bot, call)
+  File "/bot/roomBot/tools.py", line 113, in proccess_change_menu
+    mongotools.update(chat_id, buylist=[])
+NameError: name 'chat_id' is not defined
+2020-03-02 19:20:50,944 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 19:20:51,011 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 19:20:51,011 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 19:20:51,011 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:21:02,768 | roomBot.tools | ERROR 	| 'Message' object has no attribute 'chat_id'
+Traceback (most recent call last):
+  File "run.py", line 5, in <module>
+    start()
+  File "/bot/roomBot/bot.py", line 28, in start
+    bot.polling()
+  File "/usr/local/lib/python3.8/site-packages/telebot/__init__.py", line 392, in polling
+    self.__threaded_polling(none_stop, interval, timeout)
+  File "/usr/local/lib/python3.8/site-packages/telebot/__init__.py", line 416, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "/usr/local/lib/python3.8/site-packages/telebot/util.py", line 109, in raise_exceptions
+    six.reraise(self.exc_info[0], self.exc_info[1], self.exc_info[2])
+  File "/usr/local/lib/python3.8/site-packages/six.py", line 703, in reraise
+    raise value
+  File "/usr/local/lib/python3.8/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/bot/roomBot/bot.py", line 105, in change_query_handler
+    tools.proccess_change_menu(bot, call)
+  File "/bot/roomBot/tools.py", line 98, in proccess_change_menu
+    chat_id = call.message.chat_id
+AttributeError: 'Message' object has no attribute 'chat_id'
+2020-03-02 19:22:16,086 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 19:22:16,159 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 19:22:16,159 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 19:22:16,159 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:22:19,565 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:25:33,709 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 19:25:33,778 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 19:25:33,779 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 19:25:33,779 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:25:38,130 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:25:41,530 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:25:42,804 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:27:39,006 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:27:45,989 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:27:47,713 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:31:23,612 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 19:31:23,680 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 19:31:23,681 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 19:31:23,681 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:32:34,233 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:32:36,011 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:32:37,436 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:32:45,750 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:32:50,210 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:32:53,519 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:33:05,550 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:33:13,102 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:33:50,475 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:37:49,290 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:37:51,683 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:40:01,752 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:40:05,739 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:40:20,307 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:40:22,560 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:40:26,782 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:43:41,574 | roomBot.tools | INFO 	| Hello from @kektest1488bot!
+2020-03-02 19:43:41,647 | roomBot.tools | INFO 	| [INFO] >> Removed webhook
+2020-03-02 19:43:41,648 | roomBot.tools | INFO 	| [INFO] >> Database has been attached
+2020-03-02 19:43:41,648 | roomBot.tools | INFO 	| [INFO] >> Starting polling ...
+2020-03-02 19:43:48,508 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:43:50,958 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:43:54,068 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:43:55,497 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:43:59,132 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:44:01,367 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:44:02,656 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:44:06,687 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:44:09,438 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:46:34,465 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: Specify the items you want to buy like this:*
+item1
+item number 2
+item #3*
+2020-03-02 19:46:38,065 | roomBot.tools | INFO 	| BOT -> 339999894: Acknowledged!
+2020-03-02 19:46:40,408 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:47:38,547 | roomBot.tools | INFO 	| BOT [EDIT MESSAGE] -> sevenzing/339999894: The list was cleared
+2020-03-02 19:47:45,285 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:47:47,542 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:
+2020-03-02 19:47:49,240 | roomBot.tools | INFO 	| BOT -> sevenzing/339999894: your list:

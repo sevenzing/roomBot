@@ -39,18 +39,25 @@ def change_message(bot: TeleBot, message: Message,
                    text=None, parse_mode=None, reply_markup=None):
     try:
         if not text is None:
-            changed_message = bot.edit_message_text(text, message.chat.id, message.message_id, parse_mode=parse_mode)
+            changed_message = bot.edit_message_text(text, message.chat.id, message.message_id, 
+                                                    parse_mode=parse_mode, reply_markup=reply_markup)
             tools.log(f"BOT [EDIT MESSAGE] -> {message.chat.username}/{message.chat.id}: {text}")
-        if not reply_markup is None:
+        elif not reply_markup is None:
             bot.edit_message_reply_markup(message.chat.id, message.message_id, reply_markup=reply_markup)
             
         return change_message
     except telebot.apihelper.ApiException as e:
         if 'bot was kicked' in e.args[0]:
             tools.log(f"Bot has kicked from group {message.chat.id}.", error=True)
+        elif 'message is not modified' in e.args[0]:
+            tools.log(f"Message not modified: {message}")
         else:
             raise(e)
         
+
+def delete_message(bot: TeleBot, message: Message):
+    bot.delete_message(message.chat.id, message.message_id)
+
 
 def generate_choose_day_button() -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(row_width=2)
@@ -87,3 +94,6 @@ def generate_buy_list(buylist) -> InlineKeyboardMarkup:
     keyboard.add(close_button, clearlist_button)
 
     return keyboard
+
+def generate_empty_buttons():
+    return InlineKeyboardMarkup()

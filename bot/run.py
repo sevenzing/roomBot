@@ -1,3 +1,8 @@
 from roomBot.bot import start
+from roomBot import tools
 
-start()
+try:
+    start()
+except Exception as e:
+    tools.log(e, error=True)
+    raise e

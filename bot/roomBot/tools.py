@@ -2,6 +2,7 @@ import logging
 import sys
 import math
 from enum import Enum
+from telebot.types import CallbackQuery
 
 from . import mongotools
 from . import config
@@ -24,7 +25,7 @@ def in_private_message(message) -> bool:
 def get_logger(name=__name__):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
-    
+
     logger_handler = logging.FileHandler(config.PATH_TO_BOT_LOG_FILE)
     logger_handler.setLevel(logging.INFO)
  
@@ -89,23 +90,29 @@ def log(message, error=False):
     
     print(message)
 
-def proccess_change_menu(chat_id: str, query: str):
+
+def proccess_change_menu(bot, call: CallbackQuery):
     """
     handle query from buttons, returns new buttons
     """
-
-    _, command, name = query.split('|')
+    chat_id = call.message.chat.id
+    _, command, name = call.data.split('|')
 
     if command == config.INCREASE:
-        if mongotools.change_amount_of_items(chat_id, name, 1):
-            pass
-        else:
-            raise NameError
+        mongotools.change_amount_of_items(chat_id, name, 1)
+    
     elif command == config.DECREASE:
-        if mongotools.change_amount_of_items(chat_id, name, -1):
-            pass
-        else:
-            raise NameError
+        mongotools.change_amount_of_items(chat_id, name, -1)
+        
+    elif command == config.CLEAR:
+        mongotools.update(chat_id, buylist=[])
+        return telegramtools.change_message(bot, call.message, config.LIST_WAS_DELETED, 
+                                     reply_markup=telegramtools.generate_buy_list([]))
     
-    
-    return telegramtools.generate_buy_list(mongotools.get_safe(chat_id, 'buylist'))
+
+    elif command == config.EXIT:
+        return telegramtools.delete_message(bot, call.message)
+
+
+    telegramtools.change_message(bot, call.message,
+                                 reply_markup=telegramtools.generate_buy_list(mongotools.get_safe(chat_id, 'buylist')))

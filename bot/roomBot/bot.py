@@ -25,11 +25,7 @@ def start():
         exit(1)
     else:
         tools.log('[INFO] >> Starting polling ...')
-        try:
-            bot.polling()
-        except Exception as e:
-            tools.log(e, error=True)
-            raise e
+        bot.polling()
 
 
 @bot.message_handler(func=lambda message: not message.new_chat_member is None,
@@ -71,7 +67,7 @@ def sendNextCleaningDay(message: Message):
     telegramtools.answer(bot, message, message_to_send, parse_mode='Markdown')
 
 
-@bot.message_handler(commands=['buylist'])
+@bot.message_handler(commands=['list'])
 def sendBuyList(message: Message):
     buylist = mongotools.get_safe(message.chat.id, 'buylist')
     telegramtools.answer(bot, message, config.SEND_BUY_LIST, 
@@ -88,7 +84,8 @@ def setStateToAdd(message: Message):
 def addMessageToList(message: Message):
     mongotools.extend_buy_list(message.chat.id, message.text)
     mongotools.update(message.chat.id, state=tools.States.STATE_DEFAULT)
-    
+    telegramtools.send_message(bot, message.chat.id, config.ITEMS_ADDED)
+
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('__cb'))
 def callback_query(call):
@@ -106,7 +103,7 @@ def callback_query(call):
 
 @bot.callback_query_handler(func=lambda call: 'change_menu' in call.data)
 def change_query_handler(call):
-    telegramtools.change_message(bot, call.message, 
-                                 reply_markup=tools.proccess_change_menu(call.message.chat.id, call.data))
+    tools.proccess_change_menu(bot, call)
+    
 
 

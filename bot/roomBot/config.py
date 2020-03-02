@@ -1,6 +1,6 @@
 import configparser
 
-PATH_TO_BOT_LOG_FILE = '/roomBot.log'
+PATH_TO_BOT_LOG_FILE = 'roomBot.log'
 PATH_TO_NOTIFICATION_LOG_FILE = 'notification.log'
 
 # --------
@@ -43,6 +43,10 @@ CHANGE_KEYBOARD_CLOSE_TEXT = "[close]"
 CHANGE_KEYBOARD_CLEAR_TEXT = "[clear]"
 
 ADD_ITEM_TO_LIST = "Specify the items you want to buy like this:*\nitem1\nitem number 2\nitem #3*"
+
+LIST_WAS_DELETED = "The list was cleared"
+
+ITEMS_ADDED = "Acknowledged!"
 
 INCREASE = 'increase'
 

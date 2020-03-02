@@ -1,11 +1,12 @@
-from roomBot import mongotools, timetools, config, tools
-from setup import logger 
 import datetime
 import pytz
+from setup import logger 
+
+# docker will copy this module  
+from roomBot import mongotools, timetools, config, tools
 
 
 def check_time(bot, db):
-    log('Checking time...')
 
     now = datetime.datetime.now(pytz.timezone(config.TIME_ZONE))
     #now = datetime.datetime(2020, 3, 4, 7, 55, tzinfo=pytz.timezone(config.TIME_ZONE)) + datetime.timedelta(minutes=datetime.datetime.now(pytz.timezone(config.TIME_ZONE)).minute)
