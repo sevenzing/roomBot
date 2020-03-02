@@ -8,7 +8,7 @@ def check_time(bot, db):
     log('Checking time...')
 
     now = datetime.datetime.now(pytz.timezone(config.TIME_ZONE))
-    now = datetime.datetime(2020, 3, 4, 7, 55, tzinfo=pytz.timezone(config.TIME_ZONE)) + datetime.timedelta(minutes=datetime.datetime.now(pytz.timezone(config.TIME_ZONE)).minute)
+    #now = datetime.datetime(2020, 3, 4, 7, 55, tzinfo=pytz.timezone(config.TIME_ZONE)) + datetime.timedelta(minutes=datetime.datetime.now(pytz.timezone(config.TIME_ZONE)).minute)
     
     _, week_number, day_number = now.isocalendar()
     if day_number not in [1, 3, 5] or now.hour < config.NOTICE_HOUR:

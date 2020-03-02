@@ -4,3 +4,4 @@ __pycache__/
 mongodb_data/
 .git/
 bot.config
+*.log
