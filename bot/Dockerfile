@@ -12,4 +12,4 @@ WORKDIR ./bot
 
 ENTRYPOINT ["python"]
 
-CMD ["run.py"]
+CMD ["-u", "run.py"]

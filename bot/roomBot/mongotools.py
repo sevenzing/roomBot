@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import pymongo
 import pytz
+from typing import List, Dict
 
 from .config import TIME_ZONE, NOTICE_HOUR
 
@@ -17,16 +18,17 @@ def get_db():
 
 default_chat = {'chat_id': None,
                 'username': None,
+                'state': 0,
                 'chosenbuilding': 0,
                 'checknotice': True,
-                'lastnotice': None}
+                'lastnotice': None,
+                'buylist':[("example of your items", 1)]}
 
 db = get_db()
 
+def createNew(chat_id, username=None, chosenbuilding=0):
 
-def createNew(db, chat_id, username=None, chosenbuilding=0):
-
-    if chat_in_database(db, chat_id):
+    if chat_in_database(chat_id):
         return 
 
     chat = default_chat.copy()
@@ -38,7 +40,7 @@ def createNew(db, chat_id, username=None, chosenbuilding=0):
     db.insert_one(chat)
 
 
-def get_chat(db, chat_id):
+def get_chat(chat_id) -> Dict:
     chat = None
     for chat_iter in db.find({'chat_id': chat_id}):
         chat = chat_iter
@@ -47,21 +49,26 @@ def get_chat(db, chat_id):
     return chat
 
 
-def update(db, chat_id, username=None, chosenbuilding=None, checknotice=None, lastnotice=None):
-    if not chat_in_database(db, chat_id):
-        createNew(db, chat_id, chosenbuilding=chosenbuilding)
+def find_chats_with_notice() -> Dict:
+    for chat in db.find({"checknotice": True}):
+        yield chat
+
+
+def update(chat_id, username=None, state=None, chosenbuilding=None, checknotice=None, lastnotice=None, buylist=None):
+    if not chat_in_database(chat_id):
+        createNew(chat_id, chosenbuilding=chosenbuilding)
     
     new_user_options = {}
-    for option_name, option in zip(['username', 'chosenbuilding', 'checknotice', 'lastnotice'],
-                                   [username, chosenbuilding, checknotice, lastnotice]):
+    for option_name, option in zip(['username', 'state', 'chosenbuilding', 'checknotice', 'lastnotice', 'buylist'],
+                                   [ username,   state,   chosenbuilding,   checknotice,   lastnotice,   buylist]):
         if not option is None:
             new_user_options[option_name] = option
 
     db.update_one({'chat_id': chat_id}, {'$set': new_user_options})
 
 
-def chat_in_database(db, chat_id):
-    return not get_chat(db, chat_id) is None
+def chat_in_database(chat_id):
+    return not get_chat(chat_id) is None
 
 
 def get_next_day(date: datetime):
@@ -69,13 +76,40 @@ def get_next_day(date: datetime):
     return datetime(n.year, n.month, n.day, tzinfo=pytz.timezone(TIME_ZONE))
 
 
-def extend_notice_list(db, chat_id, aliases):
-    chat = get_chat(db, chat_id)
-    noticelist = eval(chat['noticelist'])
-    noticelist.extend(aliases)
-    noticelist = list(set(noticelist))
-    update(db, chat_id, noticelist=str(noticelist))
-    return noticelist
+def extend_buy_list(chat_id, message):
+    buylist = get_safe(chat_id, 'buylist')
+    all_names = [item[0] for item in buylist]
+
+    for item_name in message.split('\n'):
+        if item_name not in all_names:
+            buylist.append([item_name, 1])
+    
+    update(chat_id, buylist=buylist)
+
+
+def get_safe(chat_id, key):
+    chat = get_chat(chat_id)
+    if chat is None:
+        createNew(chat_id)
+    return chat[key]
+
+
+def change_amount_of_items(chat_id, item_name, number) -> bool:
+    # search for item
+    buylist = get_safe(chat_id, 'buylist')
+    for index in range(len(buylist)):
+        name, amount = buylist[index]
+        if name == item_name:            
+            # update amount
+            if amount + number <= 0:
+                buylist.remove([name, amount])
+            else:
+                buylist[index] = (name, amount + number)
+
+            update(chat_id, buylist=buylist)
+            return True
+
+    return False
 
 if __name__ == '__main__':
     from TOKENS import MONGO_URI

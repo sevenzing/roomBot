@@ -1,5 +1,8 @@
 import configparser
 
+PATH_TO_BOT_LOG_FILE = '/roomBot.log'
+PATH_TO_NOTIFICATION_LOG_FILE = 'notification.log'
+
 # --------
 # Messages
 # --------
@@ -27,6 +30,27 @@ SUCCESS_BUILDING = "Great! You have chosen %s building"
 
 HAVE_NOT_BUILDING = "You haven't chosen a building yet. \n/changebuilding"
 
+# ==========
+#  Buy list 
+# ==========
+
+SEND_BUY_LIST = "your list:"
+
+CHANGE_KEYBOARD_DECREASE_TEXT = "[decrease]"
+
+CHANGE_KEYBOARD_CLOSE_TEXT = "[close]"
+
+CHANGE_KEYBOARD_CLEAR_TEXT = "[clear]"
+
+ADD_ITEM_TO_LIST = "Specify the items you want to buy like this:*\nitem1\nitem number 2\nitem #3*"
+
+INCREASE = 'increase'
+
+DECREASE = 'decrease'
+
+EXIT = 'exit'
+
+CLEAR = 'clear'
 
 # =================
 #  FROM CONFIG FILE

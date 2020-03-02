@@ -1,10 +1,20 @@
 import logging 
 import sys
 import math
+from enum import Enum
 
 from . import mongotools
 from . import config
 from . import timetools
+from . import telegramtools
+
+
+class States():
+    """
+    A simple state machine
+    """
+    STATE_DEFAULT = 0
+    STATE_WAIT_FOR_ADD = 1
 
 
 def in_private_message(message) -> bool:
@@ -14,9 +24,8 @@ def in_private_message(message) -> bool:
 def get_logger(name=__name__):
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
- 
-    #logger_handler = logging.StreamHandler(sys.stdout)
-    logger_handler = logging.FileHandler("roomBot.log")
+    
+    logger_handler = logging.FileHandler(config.PATH_TO_BOT_LOG_FILE)
     logger_handler.setLevel(logging.INFO)
  
     logger_formatter = logging.Formatter('%(asctime)s | %(name)s | %(levelname)s \t| %(message)s')
@@ -37,15 +46,15 @@ def ordinal(n: int) -> str:
     return "%d%s" % (n, "tsnrhtdd"[(math.floor(n / 10) % 10 != 1) * (n % 10 < 4) * n % 10::4])
 
 
-def next_cleaning_day(db, chat_id):
+def next_cleaning_day(chat_id) -> str:
     """
-    Returns the next cleaning day from user/chat with such chat_id
+    Returns the next cleaning day for user/chat with such chat_id
     """
     
-    if not mongotools.chat_in_database(db, chat_id):
-        mongotools.createNew(db, chat_id)
+    if not mongotools.chat_in_database(chat_id):
+        mongotools.createNew(chat_id)
     
-    chat = mongotools.get_chat(db, chat_id)
+    chat = mongotools.get_chat(chat_id)
 
 
     building = int(chat['chosenbuilding'])
@@ -68,15 +77,35 @@ def log(message, error=False):
     Write message in log file and console 
     """
 
-    # Delete all emoji from the message
-    message = message.encode('ascii', 'ignore').decode('ascii')
     if error:
         if isinstance(message, Exception):
             logger.exception(message)
         else:
             logger.error(message)
     else:
+        # Delete all emoji from the message
+        message = message.encode('ascii', 'ignore').decode('ascii')
         logger.info(message)
     
     print(message)
 
+def proccess_change_menu(chat_id: str, query: str):
+    """
+    handle query from buttons, returns new buttons
+    """
+
+    _, command, name = query.split('|')
+
+    if command == config.INCREASE:
+        if mongotools.change_amount_of_items(chat_id, name, 1):
+            pass
+        else:
+            raise NameError
+    elif command == config.DECREASE:
+        if mongotools.change_amount_of_items(chat_id, name, -1):
+            pass
+        else:
+            raise NameError
+    
+    
+    return telegramtools.generate_buy_list(mongotools.get_safe(chat_id, 'buylist'))

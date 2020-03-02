@@ -3,7 +3,7 @@ from telebot import TeleBot
 import telebot
 
 from . import tools
-
+from . import config
 
 def answer(bot: TeleBot, 
            message: Message, text: str, 
@@ -46,15 +46,44 @@ def change_message(bot: TeleBot, message: Message,
             
         return change_message
     except telebot.apihelper.ApiException as e:
-        if 'bot was kicked' is e.args[0]:
+        if 'bot was kicked' in e.args[0]:
             tools.log(f"Bot has kicked from group {message.chat.id}.", error=True)
         else:
             raise(e)
         
 
-def generate_choose_day_button():
+def generate_choose_day_button() -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(row_width=2)
     for number in range(1, 4, 2):
         keyboard.add(InlineKeyboardButton(f"{tools.ordinal(number)}", callback_data=f"__cb{number}"),
                      InlineKeyboardButton(f"{tools.ordinal(number + 1)}", callback_data=f"__cb{number + 1}"),)
+    return keyboard
+
+
+def generate_buy_list(buylist) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(row_width=2)
+    
+    for entry in buylist:
+        name, amount = entry
+        
+        name_button = telebot.types.InlineKeyboardButton(
+            text = f"{name}: [{amount}]",
+            callback_data=f"change_menu|{config.INCREASE}|{name}")
+
+        decr_button = telebot.types.InlineKeyboardButton(
+            text = config.CHANGE_KEYBOARD_DECREASE_TEXT,
+            callback_data=f"change_menu|{config.DECREASE}|{name}")
+        
+        keyboard.add(name_button, decr_button)
+
+    close_button = telebot.types.InlineKeyboardButton(
+            text = config.CHANGE_KEYBOARD_CLOSE_TEXT,
+            callback_data=f"change_menu|{config.EXIT}|")
+
+    clearlist_button = telebot.types.InlineKeyboardButton(
+            text = config.CHANGE_KEYBOARD_CLEAR_TEXT,
+            callback_data=f"change_menu|{config.CLEAR}|")
+    
+    keyboard.add(close_button, clearlist_button)
+
     return keyboard
