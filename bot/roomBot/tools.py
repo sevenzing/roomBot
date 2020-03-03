@@ -70,6 +70,10 @@ def next_cleaning_day(chat_id) -> str:
                        timetools.getMonthName(nextCleaningDate))
 
 
+def cut_text(text):
+    return text if len(text) < 20 else text[:20] + "..."
+
+
 logger = get_logger(__name__)
 
 
@@ -91,7 +95,7 @@ def log(message, error=False):
     print(message)
 
 
-def proccess_change_menu(bot, call: CallbackQuery):
+def process_change_menu(bot, call: CallbackQuery):
     """
     handle query from buttons, returns new buttons
     """
@@ -107,7 +111,7 @@ def proccess_change_menu(bot, call: CallbackQuery):
     elif command == config.CLEAR:
         mongotools.update(chat_id, buylist=[])
         return telegramtools.change_message(bot, call.message, config.LIST_WAS_DELETED, 
-                                     reply_markup=telegramtools.generate_buy_list([]))
+                                     reply_markup=telegramtools.generate_empty_buttons())
     
 
     elif command == config.EXIT:

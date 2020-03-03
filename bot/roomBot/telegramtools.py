@@ -74,7 +74,7 @@ def generate_buy_list(buylist) -> InlineKeyboardMarkup:
         name, amount = entry
         
         name_button = telebot.types.InlineKeyboardButton(
-            text = f"{name}: [{amount}]",
+            text = f"{tools.cut_text(name)}: [{amount}]",
             callback_data=f"change_menu|{config.INCREASE}|{name}")
 
         decr_button = telebot.types.InlineKeyboardButton(

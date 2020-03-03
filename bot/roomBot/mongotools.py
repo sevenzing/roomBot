@@ -4,15 +4,15 @@ import pytz
 from typing import List, Dict
 
 from .config import TIME_ZONE, NOTICE_HOUR
-
+from . import tools
 
 def get_db():
-    client = pymongo.MongoClient('mongodb://root:password@mongo:27017/')
-    db = client.user1448
+    #client = pymongo.MongoClient('mongodb://root:password@mongo:27017/')
+    #db = client.user1448
 
-    #client = pymongo.MongoClient('mongodb://heroku_2n5xgpck:hfoqb10p4b1968cv42nbrsrlef@ds031359.mlab.com:31359/heroku_2n5xgpck?retryWrites=false')
+    client = pymongo.MongoClient('mongodb://heroku_2n5xgpck:hfoqb10p4b1968cv42nbrsrlef@ds031359.mlab.com:31359/heroku_2n5xgpck?retryWrites=false')
 
-    #return client.heroku_2n5xgpck.roomBotTest3
+    return client.heroku_2n5xgpck.roomBotTest3
     return db.roomBot
 
 
@@ -22,7 +22,7 @@ default_chat = {'chat_id': None,
                 'chosenbuilding': 0,
                 'checknotice': True,
                 'lastnotice': None,
-                'buylist':[("example of your items", 1)]}
+                'buylist':[("Sample", 1)]}
 
 db = get_db()
 
@@ -81,6 +81,7 @@ def extend_buy_list(chat_id, message):
     all_names = {item[0] for item in buylist}
 
     for item_name in message.split('\n'):
+        item_name = tools.cut_text(item_name)
         if item_name not in all_names:
             buylist.append([item_name, 1])
             all_names.add(item_name)
@@ -92,6 +93,7 @@ def get_safe(chat_id, key):
     chat = get_chat(chat_id)
     if chat is None:
         createNew(chat_id)
+        chat = get_chat(chat_id)
     return chat[key]
 
 

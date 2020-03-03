@@ -46,7 +46,7 @@ ADD_ITEM_TO_LIST = "Specify the items you want to buy like this:*\nitem1\nitem n
 
 LIST_WAS_DELETED = "The list was cleared"
 
-ITEMS_ADDED = "Acknowledged!"
+ITEMS_ADDED = "Acknowledged, %s"
 
 INCREASE = 'increase'
 
