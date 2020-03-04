@@ -7,12 +7,12 @@ from .config import TIME_ZONE, NOTICE_HOUR
 from . import tools
 
 def get_db():
-    #client = pymongo.MongoClient('mongodb://root:password@mongo:27017/')
-    #db = client.user1448
+    client = pymongo.MongoClient('mongodb://root:password@mongo:27017/')
+    db = client.user1448
 
-    client = pymongo.MongoClient('mongodb://heroku_2n5xgpck:hfoqb10p4b1968cv42nbrsrlef@ds031359.mlab.com:31359/heroku_2n5xgpck?retryWrites=false')
+    #client = pymongo.MongoClient('mongodb://heroku_2n5xgpck:hfoqb10p4b1968cv42nbrsrlef@ds031359.mlab.com:31359/heroku_2n5xgpck?retryWrites=false')
 
-    return client.heroku_2n5xgpck.roomBotTest3
+    #return client.heroku_2n5xgpck.roomBotTest3
     return db.roomBot
 
 

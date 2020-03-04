@@ -4,5 +4,5 @@ __pycache__/
 mongodb_data/
 .git/
 bot.config
-roomBot.log
-notification.log
+**/*.log
+not_docker-compose.yml

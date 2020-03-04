@@ -3,7 +3,7 @@ import pytz
 from setup import logger 
 
 # docker will copy this module  
-from roomBot import mongotools, timetools, config, tools
+from roomBot import mongotools, timetools, config, tools, telegramtools
 
 
 def check_time(bot, db):
