@@ -11,7 +11,7 @@ START_MESSAGE = "Hi! I'm room bot. \n\n"\
                 "📅 First, select your building to understand the cleaning schedule\n"\
                 "😎 You can /add item to your buylist and manage it using /list\n"\
                 "❓ When the next cleaning day? /nextcleaning\n"\
-                "⏩ Did you make a mistake? Change your building /changebuilding \n"
+                "⏩ Did you make a mistake? Change your building /changebuilding \n"\
                 "⏰ The bot sends a notification on every cleaning day at 8am \n"\
 
 HELP_MESSAGE = """help message"""
