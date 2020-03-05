@@ -15,7 +15,10 @@ RUN pip3 install -r /notification/requirements.txt
 
 RUN rm /notification/requirements.txt
 
+
 WORKDIR ./notification
+
+CMD touch notification.log
 
 ENTRYPOINT ["python"]
 
