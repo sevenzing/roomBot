@@ -70,8 +70,8 @@ def generate_choose_day_button() -> InlineKeyboardMarkup:
 def generate_buy_list(buylist) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboardMarkup(row_width=2)
     
-    for entry in buylist:
-        name, amount = entry
+    for name in buylist:
+        amount = buylist[name]
         
         name_button = telebot.types.InlineKeyboardButton(
             text = f"{tools.cut_text(name)}: [{amount}]",

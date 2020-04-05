@@ -22,7 +22,7 @@ default_chat = {'chat_id': None,
                 'chosenbuilding': 0,
                 'checknotice': True,
                 'lastnotice': None,
-                'buylist':[("Sample", 1)]}
+                'buylist':{"Sample": 1}}
 
 db = get_db()
 
@@ -83,9 +83,10 @@ def extend_buy_list(chat_id, message):
     for item_name in message.split('\n'):
         item_name = tools.cut_text(item_name)
         if item_name not in all_names:
-            buylist.append([item_name, 1])
+            buylist[item_name] = 1
             all_names.add(item_name)
-            
+        else:
+            buylist[item_name] += 1
     update(chat_id, buylist=buylist)
 
 
@@ -100,17 +101,17 @@ def get_safe(chat_id, key):
 def change_amount_of_items(chat_id, item_name, number) -> bool:
     # search for item
     buylist = get_safe(chat_id, 'buylist')
-    for index in range(len(buylist)):
-        name, amount = buylist[index]
-        if name == item_name:            
-            # update amount
-            if amount + number <= 0:
-                buylist.remove([name, amount])
-            else:
-                buylist[index] = (name, amount + number)
+    
+    if item_name in buylist:
+        amount = buylist[item_name]
+        # update amount
+        if amount + number <= 0:
+            buylist.pop(item_name)
+        else:
+            buylist[item_name] += amount 
 
-            update(chat_id, buylist=buylist)
-            return True
+        update(chat_id, buylist=buylist)
+        return True
 
     return False
 

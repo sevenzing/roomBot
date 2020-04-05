@@ -18,17 +18,18 @@ def start():
     tools.log(f'Hello from @{bot.get_me().username}!')
 
     bot.delete_webhook()
-    tools.log('[INFO] >> Removed webhook')
+    tools.log('Removed webhook')
 
     from .mongotools import db
-    tools.log('[INFO] >> Database has been attached')
+    tools.log('Database has been attached')
 
     if "--webhook" in sys.argv:
-        tools.log("[INFO] >> Setting webhook")
+        tools.log("Setting webhook")
         tools.log("webhook not implemented yet. Exit...")
-        exit(1)
+        exit(0)
+
     else:
-        tools.log('[INFO] >> Starting polling ...')
+        tools.log('Starting polling ...')
         bot.polling()
 
 
@@ -72,6 +73,15 @@ def change_building(message: Message):
 
     telegramtools.answer(bot, message, config.CHANGE_BUILDING_MESSAGE, 
                          reply_markup=telegramtools.generate_choose_day_button())
+
+@bot.message_handler(commands=['notice'])
+def change_notice(message: Message):
+    """
+    Change notice state
+    """
+    
+    telegramtools.answer(bot, message, 
+                         tools.change_notice_state(message.chat.id))
 
 
 @bot.message_handler(commands=['nextcleaning'])

@@ -109,7 +109,7 @@ def process_change_menu(bot, call: CallbackQuery):
         mongotools.change_amount_of_items(chat_id, name, -1)
         
     elif command == config.CLEAR:
-        mongotools.update(chat_id, buylist=[])
+        mongotools.update(chat_id, buylist={})
         return telegramtools.change_message(bot, call.message, config.LIST_WAS_DELETED, 
                                      reply_markup=telegramtools.generate_empty_buttons())
     
@@ -120,3 +120,14 @@ def process_change_menu(bot, call: CallbackQuery):
 
     telegramtools.change_message(bot, call.message,
                                  reply_markup=telegramtools.generate_buy_list(mongotools.get_safe(chat_id, 'buylist')))
+
+def change_notice_state(chat_id):
+    chat = mongotools.get_chat(chat_id)
+    
+    if chat['checknotice']:
+        mongotools.update(chat_id, checknotice=False)
+        return config.NOTICE_OFF
+    else:
+        mongotools.update(chat_id, checknotice=True)
+        return config.NOTICE_ON
+

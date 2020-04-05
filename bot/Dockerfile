@@ -1,18 +1,19 @@
 FROM python:latest
 
+COPY bot/requirements.txt bot/requirements.txt 
+
+RUN pip3 install -r /bot/requirements.txt
+
+RUN rm bot/requirements.txt
+
 COPY bot/ bot/
 
 COPY bot.config ./
 
-RUN pip3 install -r /bot/requirements.txt
-
-
-RUN rm /bot/requirements.txt
-
-WORKDIR ./bot
+WORKDIR bot
 
 CMD touch notification.log
 
-ENTRYPOINT ["python"]
+ENTRYPOINT ["sh"]
 
-CMD ["-u", "run.py"]
+CMD ["run.sh"]
