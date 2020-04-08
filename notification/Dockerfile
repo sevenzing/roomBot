@@ -12,8 +12,6 @@ COPY bot/roomBot/ notification/roomBot/
 
 COPY bot/roomBot.log notification/
 
-COPY bot.config ./
-
 WORKDIR ./notification
 
 CMD touch notification.log

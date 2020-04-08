@@ -1,7 +1,7 @@
 import telebot
 import logging
 from roomBot import config
-from roomBot.mongotools import db 
+from roomBot.database import db
 
 
 def get_logger(name, path):

@@ -1,4 +1,4 @@
-import configparser
+import os
 
 PATH_TO_BOT_LOG_FILE = 'roomBot.log'
 PATH_TO_NOTIFICATION_LOG_FILE = 'notification.log'
@@ -63,27 +63,10 @@ CLEAR = 'clear'
 #  FROM CONFIG FILE
 # =================
 
+BOT_TOKEN = os.environ.get('BOT_TOKEN', '')
 
-CONFIG_NAME = "Bot settings" 
-PATH = "../bot.config"
+TIME_ZONE = os.environ.get('TIME_ZONE', '')
 
+NOTICE_HOUR = int(os.environ.get('NOTICE_HOUR', ''))
 
-def readConfig(path, name):
-    values = {"bot_token": None,
-              "time_zone": None,
-              "notice_hour": None,
-              "url_to_schedule": None,
-              "bot_port": None,
-              "bot_url": None}
-    
-    config = configparser.ConfigParser()
-    config.read(path)
-    
-    for key in values:
-        values[key] = (config.get(name, key))
-    
-    return values
- 
-BOT_TOKEN, TIME_ZONE, NOTICE_HOUR, URL_TO_SCHEDULE, BOT_PORT, BOT_URL  = readConfig(PATH, CONFIG_NAME).values()
-
-NOTICE_HOUR = int(NOTICE_HOUR)
+URL_TO_SCHEDULE = os.environ.get('URL_TO_SCHEDULE', '')

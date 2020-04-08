@@ -3,9 +3,9 @@ import pytz
 import time
 from threading import Thread
 
-from . import telegramtools
-from . import mongotools
-from . import tools
+from roomBot import telegramtools
+from roomBot import database
+from roomBot import tools
 from .config import TIME_ZONE, NOTICE_MESSAGE_START, NOTICE_HOUR
 
 

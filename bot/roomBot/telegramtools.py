@@ -2,8 +2,8 @@ from telebot.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from telebot import TeleBot
 import telebot
 
-from . import tools
-from . import config
+from roomBot import tools
+from roomBot import config
 
 def answer(bot: TeleBot, 
            message: Message, text: str, 

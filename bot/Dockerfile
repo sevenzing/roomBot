@@ -8,8 +8,6 @@ RUN rm bot/requirements.txt
 
 COPY bot/ bot/
 
-COPY bot.config ./
-
 WORKDIR bot
 
 CMD touch notification.log

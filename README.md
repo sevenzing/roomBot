@@ -5,10 +5,8 @@ Structure of the bot
 ---
 + docker-compose
    + python3
-        + pyTelegramBotAPI 
-        + flask  
-        + mongotools
-    + mongo
+        + pyTelegramBotAPI
+    + redis
 
 Logging
 ---

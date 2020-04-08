@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 services:
     room_bot:
@@ -8,29 +8,40 @@ services:
         ports:
             - "8443:8443"
         volumes:
-            - "./bot.config:/bot.config"
             - "./bot/roomBot.log:/bot/roomBot.log"
-            
+        environment: 
+            - BOT_TOKEN=${BOT_TOKEN}
+            - TIME_ZONE=${TIME_ZONE}
+            - NOTICE_HOUR=${NOTICE_HOUR}
+            - URL_TO_SCHEDULE=${URL_TO_SCHEDULE}
         depends_on:
-            - mongo
+            - redis
             - notification_bot
+        networks:
+            - redis-net
 
     notification_bot:
         build:
             context: .
             dockerfile: notification/Dockerfile
+        environment: 
+            - TIME_ZONE=${TIME_ZONE}
+            - NOTICE_HOUR=${NOTICE_HOUR}
         volumes:
             - "./notification/notification.log:/notification/notification.log"
         depends_on:
-            - mongo
+            - redis
+        networks:
+            - redis-net
 
-    mongo:
-        image: mongo
-        restart: always
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: password
-        
+    redis:
+        image: redis:4.0.5-alpine
+        command: ["redis-server", "--appendonly", "yes", "--port", "5432"]
+        hostname: redis
+        networks:
+            - redis-net
         volumes:
-            - "./mongodb_data:/data/db"
-        
+            - ./storage/redis/data:/data
+    
+networks:
+    redis-net:

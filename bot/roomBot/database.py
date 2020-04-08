@@ -1,19 +1,15 @@
 from datetime import datetime, timedelta
-import pymongo
+import redis
 import pytz
-from typing import List, Dict
+from typing import List, Dict, Union
+import json
 
 from .config import TIME_ZONE, NOTICE_HOUR
 from . import tools
 
 def get_db():
-    client = pymongo.MongoClient('mongodb://root:password@mongo:27017/')
-    db = client.user1448
-
-    #client = pymongo.MongoClient('mongodb://heroku_2n5xgpck:hfoqb10p4b1968cv42nbrsrlef@ds031359.mlab.com:31359/heroku_2n5xgpck?retryWrites=false')
-
-    #return client.heroku_2n5xgpck.roomBotTest3
-    return db.roomBot
+    db = redis.Redis(host='redis', port=5432)
+    return db
 
 
 default_chat = {'chat_id': None,
@@ -26,6 +22,7 @@ default_chat = {'chat_id': None,
 
 db = get_db()
 
+
 def createNew(chat_id, username=None, chosenbuilding=0):
 
     if chat_in_database(chat_id):
@@ -37,20 +34,39 @@ def createNew(chat_id, username=None, chosenbuilding=0):
     chat['chosenbuilding'] = chosenbuilding
     chat['username'] = username
     chat['lastnotice'] = get_next_day(datetime.now(pytz.timezone(TIME_ZONE)) - timedelta(hours=NOTICE_HOUR)).__repr__()
-    db.insert_one(chat)
+    
+    insert_chat(chat_id, chat)
+
+def insert_chat(key: Union[str, int], value: dict):
+    assert isinstance(value, dict)
+    
+    db.set(key, json.dumps(value))
 
 
 def get_chat(chat_id) -> Dict:
-    chat = None
-    for chat_iter in db.find({'chat_id': chat_id}):
-        chat = chat_iter
-        break
+    value = db.get(chat_id)
 
-    return chat
+    if value:
+        return json.loads(value.decode()) 
+    else:
+        return None
 
+def find(dct):
+    for chat_id in [c.decode() for c in db.keys()]:
+        chat = get_chat(chat_id)
+        suitable = True
+        for attribute in dct:
+            if attribute not in chat:
+                suitable = False
+                break
+            if chat[attribute] != dct[attribute]:
+                suitable = False
+                break
+        if suitable: 
+            yield chat
 
 def find_chats_with_notice() -> Dict:
-    for chat in db.find({"checknotice": True}):
+    for chat in find({"checknotice": True}):
         yield chat
 
 
@@ -58,17 +74,16 @@ def update(chat_id, username=None, state=None, chosenbuilding=None, checknotice=
     if not chat_in_database(chat_id):
         createNew(chat_id, chosenbuilding=chosenbuilding)
     
-    new_user_options = {}
-    for option_name, option in zip(['username', 'state', 'chosenbuilding', 'checknotice', 'lastnotice', 'buylist'],
-                                   [ username,   state,   chosenbuilding,   checknotice,   lastnotice,   buylist]):
-        if not option is None:
-            new_user_options[option_name] = option
+    chat = get_chat(chat_id)
+    for name, value in zip(['username', 'state', 'chosenbuilding', 'checknotice', 'lastnotice', 'buylist'],
+                           [ username,   state,   chosenbuilding,   checknotice,   lastnotice,   buylist]):
+        if value != None:
+            chat[name] = value
+    insert_chat(chat_id, chat)
 
-    db.update_one({'chat_id': chat_id}, {'$set': new_user_options})
-
-
+    
 def chat_in_database(chat_id):
-    return not get_chat(chat_id) is None
+    return db.exists(chat_id)
 
 
 def get_next_day(date: datetime):
@@ -93,8 +108,7 @@ def extend_buy_list(chat_id, message):
 def get_safe(chat_id, key):
     chat = get_chat(chat_id)
     if chat is None:
-        createNew(chat_id)
-        chat = get_chat(chat_id)
+        return default_chat[key]
     return chat[key]
 
 
@@ -114,14 +128,3 @@ def change_amount_of_items(chat_id, item_name, number) -> bool:
         return True
 
     return False
-
-if __name__ == '__main__':
-    from TOKENS import MONGO_URI
-
-    client = pymongo.MongoClient(MONGO_URI)
-
-
-    db = client.heroku_2n5xgpck.roomBotBase
-
-    for i in db.find({"checknotice": True}):
-        pass

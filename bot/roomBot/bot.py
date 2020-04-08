@@ -2,11 +2,11 @@ import sys
 import telebot
 from telebot.types import Message
 
-from . import telegramtools
-from . import config
-from . import tools
-from . import mongotools
-from . import timetools
+from roomBot import telegramtools
+from roomBot import config
+from roomBot import tools
+from roomBot import database
+from roomBot import timetools
 
 bot = telebot.TeleBot(config.BOT_TOKEN)
 
@@ -20,7 +20,7 @@ def start():
     bot.delete_webhook()
     tools.log('Removed webhook')
 
-    from .mongotools import db
+    from roomBot.database import db
     tools.log('Database has been attached')
 
     if "--webhook" in sys.argv:
@@ -41,7 +41,7 @@ def check_for_adding(message: telebot.types.Message):
 
     Creates new entry in database
     """
-    mongotools.createNew(message.chat.id, message.from_user.username)   
+    database.createNew(message.chat.id, message.from_user.username)   
 
 
 @bot.message_handler(commands=['start', 'help', 'schedule'])
@@ -52,18 +52,18 @@ def process_commands(message):
     Creates new entry in database. If it exists, then skip
     Sends information message
     """
-
-    mongotools.createNew(message.chat.id, message.from_user.username)
+    
+    database.createNew(message.chat.id, username=message.from_user.username)
 
     if message.text in ['/start', '/help']: 
-        telegramtools.answer(bot, message, config.START_MESSAGE)
+        telegramtools.answer(bot, message, config.START_MESSAGE)    
     
     if message.text in ['/start']:
         change_building(message)
-
+    
     if message.text in ['/schedule']:
         telegramtools.answer(bot, message, config.URL_TO_SCHEDULE)
-
+    
 
 @bot.message_handler(commands=['changebuilding'])
 def change_building(message: Message):
@@ -100,7 +100,7 @@ def sendBuyList(message: Message):
     Gets list from db and sends to user
     """
     
-    buylist = mongotools.get_safe(message.chat.id, 'buylist')
+    buylist = database.get_safe(message.chat.id, 'buylist')
     telegramtools.answer(bot, message, config.SEND_BUY_LIST, 
                          reply_markup=telegramtools.generate_buy_list(buylist))
 
@@ -111,11 +111,11 @@ def setStateToAdd(message: Message):
     Changes state of chat, sends message to a user
     """
     
-    mongotools.update(message.chat.id, state=tools.States.STATE_WAIT_FOR_ADD)
+    database.update(message.chat.id, state=tools.States.STATE_WAIT_FOR_ADD)
     telegramtools.answer(bot, message, config.ADD_ITEM_TO_LIST, parse_mode='Markdown')
 
 
-@bot.message_handler(func=lambda m: mongotools.get_safe(m.chat.id, 'state') == tools.States.STATE_WAIT_FOR_ADD)
+@bot.message_handler(func=lambda m: database.get_safe(m.chat.id, 'state') == tools.States.STATE_WAIT_FOR_ADD)
 def addMessageToList(message: Message):
     """
     If someone write at waiting state
@@ -123,8 +123,8 @@ def addMessageToList(message: Message):
     Extends buy list, sets state to default and sends message
     """
     
-    mongotools.extend_buy_list(message.chat.id, message.text)
-    mongotools.update(message.chat.id, state=tools.States.STATE_DEFAULT)
+    database.extend_buy_list(message.chat.id, message.text)
+    database.update(message.chat.id, state=tools.States.STATE_DEFAULT)
     telegramtools.send_message(bot, message.chat.id, config.ITEMS_ADDED % message.from_user.first_name)
 
 
@@ -139,7 +139,7 @@ def callback_query(call):
     # Remove __cb from message
     building = int(call.data[4:])
 
-    mongotools.update(call.message.chat.id, chosenbuilding=building, checknotice=True)
+    database.update(call.message.chat.id, chosenbuilding=building, checknotice=True)
     telegramtools.change_message(bot, call.message, 
                                  text=config.SUCCESS_BUILDING % tools.ordinal(building))
 

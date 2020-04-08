@@ -4,10 +4,10 @@ import math
 from enum import Enum
 from telebot.types import CallbackQuery
 
-from . import mongotools
-from . import config
-from . import timetools
-from . import telegramtools
+from roomBot import database
+from roomBot import config
+from roomBot import timetools
+from roomBot import telegramtools
 
 
 class States():
@@ -52,10 +52,10 @@ def next_cleaning_day(chat_id) -> str:
     Returns the next cleaning day for user/chat with such chat_id
     """
     
-    if not mongotools.chat_in_database(chat_id):
-        mongotools.createNew(chat_id)
+    if not database.chat_in_database(chat_id):
+        database.createNew(chat_id)
     
-    chat = mongotools.get_chat(chat_id)
+    chat = database.get_chat(chat_id)
 
 
     building = int(chat['chosenbuilding'])
@@ -103,13 +103,13 @@ def process_change_menu(bot, call: CallbackQuery):
     _, command, name = call.data.split('|')
 
     if command == config.INCREASE:
-        mongotools.change_amount_of_items(chat_id, name, 1)
+        database.change_amount_of_items(chat_id, name, 1)
     
     elif command == config.DECREASE:
-        mongotools.change_amount_of_items(chat_id, name, -1)
+        database.change_amount_of_items(chat_id, name, -1)
         
     elif command == config.CLEAR:
-        mongotools.update(chat_id, buylist={})
+        database.update(chat_id, buylist={})
         return telegramtools.change_message(bot, call.message, config.LIST_WAS_DELETED, 
                                      reply_markup=telegramtools.generate_empty_buttons())
     
@@ -119,15 +119,15 @@ def process_change_menu(bot, call: CallbackQuery):
 
 
     telegramtools.change_message(bot, call.message,
-                                 reply_markup=telegramtools.generate_buy_list(mongotools.get_safe(chat_id, 'buylist')))
+                                 reply_markup=telegramtools.generate_buy_list(database.get_safe(chat_id, 'buylist')))
 
 def change_notice_state(chat_id):
-    chat = mongotools.get_chat(chat_id)
+    chat = database.get_chat(chat_id)
     
     if chat['checknotice']:
-        mongotools.update(chat_id, checknotice=False)
+        database.update(chat_id, checknotice=False)
         return config.NOTICE_OFF
     else:
-        mongotools.update(chat_id, checknotice=True)
+        database.update(chat_id, checknotice=True)
         return config.NOTICE_ON
 
