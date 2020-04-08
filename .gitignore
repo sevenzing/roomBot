@@ -6,3 +6,4 @@ storage
 bot.config
 **/*.log
 not_docker-compose.yml
+.env

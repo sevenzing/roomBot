@@ -72,7 +72,7 @@ def find_chats_with_notice() -> Dict:
 
 def update(chat_id, username=None, state=None, chosenbuilding=None, checknotice=None, lastnotice=None, buylist=None):
     if not chat_in_database(chat_id):
-        createNew(chat_id, chosenbuilding=chosenbuilding)
+        createNew(chat_id)
     
     chat = get_chat(chat_id)
     for name, value in zip(['username', 'state', 'chosenbuilding', 'checknotice', 'lastnotice', 'buylist'],
@@ -122,7 +122,7 @@ def change_amount_of_items(chat_id, item_name, number) -> bool:
         if amount + number <= 0:
             buylist.pop(item_name)
         else:
-            buylist[item_name] += amount 
+            buylist[item_name] += number 
 
         update(chat_id, buylist=buylist)
         return True

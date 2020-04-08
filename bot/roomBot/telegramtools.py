@@ -1,7 +1,7 @@
 from telebot.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from telebot import TeleBot
 import telebot
-
+import time
 from roomBot import tools
 from roomBot import config
 
@@ -9,11 +9,11 @@ def answer(bot: TeleBot,
            message: Message, text: str, 
            parse_mode=None, reply_markup=None):
     try:
+        time_start = time.time()
         sended_message = bot.send_message(message.chat.id, text, 
                                           parse_mode=parse_mode, 
                                           reply_markup=reply_markup)
-        tools.log(f"BOT -> {message.from_user.username}/{message.chat.id}: {text}")
-
+        tools.log(f"BOT in {round(time.time() - time_start, 3)} -> {message.from_user.username}/{message.chat.id}: {text}")
         return sended_message
     except telebot.apihelper.ApiException as e:
         if 'bot was kicked' in e.args[0]:
@@ -24,8 +24,9 @@ def answer(bot: TeleBot,
 
 def send_message(bot: TeleBot, chat_id, text):
     try:
+        time_start = time.time()
         sended_message = bot.send_message(chat_id, text, parse_mode="Markdown")
-        tools.log(f"BOT -> {chat_id}: {text}")
+        tools.log(f"BOT in {round(time.time() - time_start, 3)} -> {chat_id}: {text}")
         return sended_message
 
     except telebot.apihelper.ApiException as e:
@@ -38,13 +39,14 @@ def send_message(bot: TeleBot, chat_id, text):
 def change_message(bot: TeleBot, message: Message, 
                    text=None, parse_mode=None, reply_markup=None):
     try:
+        time_start = time.time()
         if not text is None:
             changed_message = bot.edit_message_text(text, message.chat.id, message.message_id, 
-                                                    parse_mode=parse_mode, reply_markup=reply_markup)
-            tools.log(f"BOT [EDIT MESSAGE] -> {message.chat.username}/{message.chat.id}: {text}")
+                                                    parse_mode=parse_mode, reply_markup=reply_markup)    
         elif not reply_markup is None:
             bot.edit_message_reply_markup(message.chat.id, message.message_id, reply_markup=reply_markup)
-            
+        
+        tools.log(f"BOT [EDIT MESSAGE] in {round(time.time() - time_start, 3)} -> {message.chat.username}/{message.chat.id}: {text}")    
         return change_message
     except telebot.apihelper.ApiException as e:
         if 'bot was kicked' in e.args[0]:
