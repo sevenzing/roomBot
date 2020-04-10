@@ -54,14 +54,14 @@ def process_commands(message):
     """
     
     database.createNew(message.chat.id, username=message.from_user.username)
-
-    if message.text in ['/start', '/help']: 
+    command = message.text 
+    if command.startswith('/start') or command.startswith('/help'): 
         telegramtools.answer(bot, message, config.START_MESSAGE)    
     
-    if message.text in ['/start']:
+    if command.startswith('/start'):
         change_building(message)
     
-    if message.text in ['/schedule']:
+    if command.startswith('/schedule'):
         #telegramtools.answer(bot, message, config.URL_TO_SCHEDULE)
         bot.send_photo(message.chat.id, tools.get_file_from_url(config.URL_TO_SCHEDULE))
 
