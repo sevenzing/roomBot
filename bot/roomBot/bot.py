@@ -62,8 +62,8 @@ def process_commands(message):
         change_building(message)
     
     if message.text in ['/schedule']:
-        telegramtools.answer(bot, message, config.URL_TO_SCHEDULE)
-    
+        #telegramtools.answer(bot, message, config.URL_TO_SCHEDULE)
+        bot.send_photo(message.chat.id, tools.get_file_from_url(config.URL_TO_SCHEDULE))
 
 @bot.message_handler(commands=['changebuilding'])
 def change_building(message: Message):

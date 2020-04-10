@@ -8,7 +8,7 @@ try:
 
 except requests.exceptions.ReadTimeout as e:
     tools.log(e, error=True)
-    exit(1)
+    exit(137)
     
 except Exception as e:
     tools.log(e, error=True)

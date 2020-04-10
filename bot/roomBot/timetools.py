@@ -20,12 +20,13 @@ def get_date_from_string(string):
 
 def get_current_building(date: datetime.datetime):
     _, week_number, day_number = date.isocalendar()
-    if day_number not in [1, 3, 5]:
-        return 0
+    if day_number not in [1, 4]:
+        return
+    if day_number == 1:
+        return 1 if not (week_number % 2) else 2
+    elif day_number == 4:
+        return 4 if not (week_number % 2) else 3
     
-    order = [2, 3, 1, 4]
-    return order[(order.index((order[2:4][::-1] + order[0:2][::-1])[(week_number - 1) % 4]) + (day_number - 1) // 2) % 4]
-
 
 def get_next_cleaning_day(building):
     current_date = datetime.datetime.now(pytz.timezone(TIME_ZONE)) + datetime.timedelta(days=1) - datetime.timedelta(hours=NOTICE_HOUR)

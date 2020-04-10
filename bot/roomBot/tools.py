@@ -1,7 +1,7 @@
 import logging 
 import sys
 import math
-from enum import Enum
+import requests
 from telebot.types import CallbackQuery
 
 from roomBot import database
@@ -131,3 +131,6 @@ def change_notice_state(chat_id):
         database.update(chat_id, checknotice=True)
         return config.NOTICE_ON
 
+
+def get_file_from_url(url):
+    return requests.get(url).content
