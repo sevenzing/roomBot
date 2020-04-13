@@ -24,7 +24,8 @@ services:
         build:
             context: .
             dockerfile: notification/Dockerfile
-        environment: 
+        environment:
+            - BOT_TOKEN=${BOT_TOKEN}
             - TIME_ZONE=${TIME_ZONE}
             - NOTICE_HOUR=${NOTICE_HOUR}
         volumes:
