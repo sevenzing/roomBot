@@ -6,7 +6,7 @@ from roomBot import tools
 try:
     start()
 
-except requests.exceptions.ReadTimeout as e:
+except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectionError) as e:
     tools.log(e, error=True)
     exit(137)
     

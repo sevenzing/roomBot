@@ -12,34 +12,28 @@ echo_and_log "Starting bot"
 python -u run.py
 result=$?
 
-time_start=$(($(date +%s%N)/1000000))
+time_start=$(($(date +%s%N)/1000000000)) # IN SECONDS 
 flag=0
 while [ ${result} != 0 ]; do
-    echo_and_log "Got exit code 1"
-    echo_and_log "Restarting bot in 5 seconds"
-    sleep 5
+    echo_and_log "Got exit code ${result}"
+    echo_and_log "Restarting bot in 10 seconds"
+    sleep 10
 
     python -u run.py
     result=$?
-    time_finished=$(($(date +%s%N)/1000000))
+    time_finished=$(($(date +%s%N)/1000000000)) # IN SECONDS 
 
     if [ ${result} -eq 137 ]; then # If exited with fucking telegram exception
         # just restart 
-        sleep 10
-        time_start=${time_finished}
-        continue
-    fi
 
-    if [ `expr ${time_finished} - ${time_start}` -lt 30000 ]; then
-        if [ ${flag} -eq 1 ]; then
-          break
-        fi
+        amount_to_sleep=`expr 120 - ${time_finished} + ${time_start}`
+        
+        amount_to_sleep=$((amount_to_sleep>0 ? amount_to_sleep : 5))
 
-        echo_and_log "restart in less than 30 seconds. sleep for 1 minute"
-        flag=1
-        sleep 60
-    else
-      flag=0
+        echo_and_log "Telegram error 137: Sleep in ${amount_to_sleep} seconds"
+
+        sleep ${amount_to_sleep}
+
     fi
     
     time_start=${time_finished}
