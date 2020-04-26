@@ -70,3 +70,5 @@ TIME_ZONE = os.environ.get('TIME_ZONE', '')
 NOTICE_HOUR = int(os.environ.get('NOTICE_HOUR', ''))
 
 URL_TO_SCHEDULE = os.environ.get('URL_TO_SCHEDULE', '')
+
+BOT_ADMIN = os.environ.get('BOT_ADMIN', '')

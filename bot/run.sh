@@ -3,23 +3,26 @@
 echo_and_log()
 {
   message=$1
-  echo $message
+  # to console
+  echo $message 
+  # to log file
   echo "$(date '+%Y-%m-%d %H:%M:%S') | run.sh script |" $message >> roomBot.log
+  # to telegram
+  python run.py --send-message "${message}"
 }
 
 
 echo_and_log "Starting bot"
-python -u run.py
+python -u run.py --start
 result=$?
 
 time_start=$(($(date +%s%N)/1000000000)) # IN SECONDS 
 flag=0
 while [ ${result} != 0 ]; do
-    echo_and_log "Got exit code ${result}"
-    echo_and_log "Restarting bot in 10 seconds"
+    echo_and_log "Got exit code ${result}. Restarting bot in 10 seconds"
     sleep 10
-
-    python -u run.py
+    echo_and_log "Starting bot"
+    python -u run.py --start
     result=$?
     time_finished=$(($(date +%s%N)/1000000000)) # IN SECONDS 
 
@@ -40,5 +43,5 @@ while [ ${result} != 0 ]; do
 done
 
 
-echo_and_log "Bot exited with code ${result}"
+echo_and_log "Bot exited with code ${result}. ALERT! bot stopped."
 exit $result

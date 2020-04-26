@@ -14,6 +14,7 @@ services:
             - TIME_ZONE=${TIME_ZONE}
             - NOTICE_HOUR=${NOTICE_HOUR}
             - URL_TO_SCHEDULE=${URL_TO_SCHEDULE}
+            - BOT_ADMIN=${BOT_ADMIN}
         depends_on:
             - redis
             - notification_bot
