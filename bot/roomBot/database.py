@@ -93,7 +93,7 @@ def get_next_day(date: datetime):
 
 def extend_buy_list(chat_id, message):
     buylist = get_safe(chat_id, 'buylist')
-    all_names = {item[0] for item in buylist}
+    all_names = {item for item in buylist}
 
     for item_name in message.split('\n'):
         item_name = tools.cut_text(item_name)
