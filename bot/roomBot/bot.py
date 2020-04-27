@@ -156,3 +156,14 @@ def change_query_handler(call):
     
 
 
+
+@bot.message_handler(commands=['admin'])
+def admin_stuff(message: Message):
+    """
+    for debug
+    """
+    
+    if message.from_user.id != int(config.BOT_ADMIN):
+        return
+    
+

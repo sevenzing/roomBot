@@ -8,28 +8,26 @@ from roomBot import config
 def answer(bot: TeleBot, 
            message: Message, text: str, 
            parse_mode=None, reply_markup=None):
-    try:
-        time_start = time.time()
-        sended_message = bot.send_message(message.chat.id, text, 
-                                          parse_mode=parse_mode, 
-                                          reply_markup=reply_markup)
-        tools.log(f"BOT in {round(time.time() - time_start, 3)} -> {message.from_user.username}/{message.chat.id}: {text}")
-        return sended_message
-    except telebot.apihelper.ApiException as e:
-        if 'bot was kicked' in e.args[0]:
-            raise Exception(f"Bot has kicked from group {message.chat.id}.")
-        else:
-            raise e
+
+    time_start = time.time()
+    sended_message = send_message(bot, message.chat.id, text, 
+                                        parse_mode=parse_mode, 
+                                        reply_markup=reply_markup)
+    tools.log(f"BOT in {round(time.time() - time_start, 3)} -> {message.from_user.username}/{message.chat.id}: {text}")
+    return sended_message
 
 
-def send_message(bot: TeleBot, chat_id, text):
+def send_message(bot: TeleBot, chat_id, text, parse_mode=None, reply_markup=None):
     try:
         time_start = time.time()
-        sended_message = bot.send_message(chat_id, text, parse_mode="Markdown")
+        tools.log(f"Trying to send message to {chat_id}")
+        sended_message = bot.send_message(chat_id, text, parse_mode=parse_mode, reply_markup=reply_markup)
         tools.log(f"BOT in {round(time.time() - time_start, 3)} -> {chat_id}: {text}")
         return sended_message
 
     except telebot.apihelper.ApiException as e:
+        error = e.args[0]
+        print(error)
         if 'bot was kicked' in e.args[0]:
             tools.log(f"Bot has kicked from group {chat_id}.", error=True)
         else:
