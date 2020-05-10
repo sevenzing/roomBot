@@ -45,7 +45,7 @@ def check_for_adding(message: telebot.types.Message):
 
 
 @bot.message_handler(commands=['start', 'help', 'schedule'])
-def process_commands(message):
+def process_commands(message: Message):
     """
     User sent a command to get information
 

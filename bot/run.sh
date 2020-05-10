@@ -18,7 +18,9 @@ result=$?
 
 time_start=$(($(date +%s%N)/1000000000)) # IN SECONDS 
 flag=0
-while [ ${result} != 0 ]; do
+
+# While true
+while [ ${result} != -1 ]; do
     echo_and_log "Got exit code ${result}. Restarting bot in 10 seconds"
     sleep 10
     echo_and_log "Starting bot"
