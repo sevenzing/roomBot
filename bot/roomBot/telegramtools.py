@@ -31,7 +31,7 @@ def send_message(bot: TeleBot, chat_id, text, parse_mode=None, reply_markup=None
         if 'bot was kicked' in e.args[0]:
             tools.log(f"Bot has kicked from group {chat_id}.", error=True)
         else:
-            tools.log(e)
+            tools.log(e, error=True)
 
 
 def change_message(bot: TeleBot, message: Message, 
@@ -52,7 +52,7 @@ def change_message(bot: TeleBot, message: Message,
         elif 'message is not modified' in e.args[0]:
             tools.log(f"Message not modified: {message}")
         else:
-            tools.log(e)
+            tools.log(e, error=True)
         
 
 def delete_message(bot: TeleBot, message: Message):
