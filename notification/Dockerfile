@@ -16,6 +16,6 @@ WORKDIR ./notification
 
 CMD touch notification.log
 
-ENTRYPOINT ["python"]
+ENTRYPOINT ["sh"]
 
-CMD ["-u", "run.py"]
+CMD ["run.sh"]
