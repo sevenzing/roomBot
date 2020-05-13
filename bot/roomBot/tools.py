@@ -71,6 +71,7 @@ def next_cleaning_day(chat_id) -> str:
 
 
 def cut_text(text):
+    text = text.strip()
     return text if len(text) < 20 else text[:20] + "..."
 
 
@@ -134,3 +135,14 @@ def change_notice_state(chat_id):
 
 def get_file_from_url(url):
     return requests.get(url).content
+
+
+def get_argument_from_command(text: str) -> str:
+    '''
+    return argument from message command
+    example: 
+        /add cookies, kek and lol -> cookies, kek and lol
+        /add@roombot cookies, kek and lol -> cookies, kek and lol
+    '''
+
+    return text.partition(' ')[2]

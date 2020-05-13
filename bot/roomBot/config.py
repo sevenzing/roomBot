@@ -42,7 +42,7 @@ ADD_ITEM_TO_LIST = "Specify the items you want to buy like this:*\nitem #1\nitem
 
 LIST_WAS_DELETED = "The list was cleared"
 
-ITEMS_ADDED = "Acknowledged, %s"
+ITEMS_ADDED = "Acknowledged, %s. \nYou can manage your list: /list"
 
 NOTICE_OFF = "Notifications are disabled"
 

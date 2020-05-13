@@ -110,9 +110,17 @@ def setStateToAdd(message: Message):
     """
     Changes state of chat, sends message to a user
     """
-    
-    database.update(message.chat.id, state=tools.States.STATE_WAIT_FOR_ADD)
-    telegramtools.answer(bot, message, config.ADD_ITEM_TO_LIST, parse_mode='Markdown')
+    database.update(message.chat.id, state=tools.States.STATE_DEFAULT)
+    tokens = tools.get_argument_from_command(message.text)\
+                  .lower().strip()\
+                  .split(',' if ',' in message.text else None)
+                  
+    if len(tokens) > 0:  # if message == /add something something2
+        message.text = '\n'.join(tokens)
+        addMessageToList(message)
+    else:
+        database.update(message.chat.id, state=tools.States.STATE_WAIT_FOR_ADD)
+        telegramtools.answer(bot, message, config.ADD_ITEM_TO_LIST, parse_mode='Markdown')
 
 
 @bot.message_handler(func=lambda m: database.get_safe(m.chat.id, 'state') == tools.States.STATE_WAIT_FOR_ADD)

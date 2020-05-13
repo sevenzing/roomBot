@@ -91,12 +91,20 @@ def get_next_day(date: datetime):
     return datetime(n.year, n.month, n.day, tzinfo=pytz.timezone(TIME_ZONE))
 
 
-def extend_buy_list(chat_id, message):
+def extend_buy_list(chat_id, message: str):
+    '''
+    extend buylist with items in `message`
+    '''
+    
     buylist = get_safe(chat_id, 'buylist')
     all_names = {item for item in buylist}
 
     for item_name in message.split('\n'):
         item_name = tools.cut_text(item_name)
+        
+        if item_name in ['', None, '\n',]: # if name is nothing
+            continue
+
         if item_name not in all_names:
             buylist[item_name] = 1
             all_names.add(item_name)
